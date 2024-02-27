@@ -113,7 +113,7 @@ bar_plot_coupon.show()
 
 We get:
 
-![](images/counts of each temperature category.png)
+![](images/counts_of_each_coupons_category.png)
 
 As restaurant gets more expensive, there are fewer and fewer coupon giveaway. There has to be a reason behind it. My hypothesis is due to income of different drivers.
 
