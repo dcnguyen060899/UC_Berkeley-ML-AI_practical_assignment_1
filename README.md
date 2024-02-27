@@ -122,7 +122,7 @@ hist_plot_temp.show()
 
 Remember, the temperature is in Farenheit. We get:
 
-![](images/counts of each temperature category.png)
+![](images/countsofeachcouponscategory.png)
 
 As temperature reaching a summer-like ( around 80F - 90F), there are more counts for this categories. Maybe it is an indication of more driver are going out more due to nice weather in the summar, and have higher chance of accepting coupons.
 
