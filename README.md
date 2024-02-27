@@ -112,7 +112,8 @@ bar_plot_coupon = px.bar(data, x='coupon', color='coupon', title="Bar Graph - Co
 bar_plot_coupon.show()
 
 We get:
-    ![](images/counts of each temperature category.png)
+
+![](images/counts of each temperature category.png)
 
 As restaurant gets more expensive, there are fewer and fewer coupon giveaway. There has to be a reason behind it. My hypothesis is due to income of different drivers.
 
@@ -122,8 +123,7 @@ hist_plot_temp.show()
 
 Remember, the temperature is in Farenheit. We get:
 
-    ![](images/countsofeachcouponscategory.png)
-
+![](images/countsofeachcouponscategory.png)
 
 As temperature reaching a summer-like ( around 80F - 90F), there are more counts for this categories. Maybe it is an indication of more driver are going out more due to nice weather in the summar, and have higher chance of accepting coupons.
 
