@@ -12,15 +12,16 @@ The main goal of this project is to observe through data analysis and visualizat
 #### 1. Observe Dataset - Finding  Out Missing Values
 - I used ```data.info()``` and notice that some numerical variable like Age is an obj/str instead of int. At first I thought this would pose a problem in the later analysis but we can use ```.isin()``` for conditional data analysis for conditional probability distribution later.
 - Then I used ```data.isnull().sum()``` and found out that:
+```python
 car                     12576
 Bar                       107
 CoffeeHouse               217
 CarryAway                 151
 RestaurantLessThan20      130
 Restaurant20To50          189
-
+```
 - I then want to observe the proportion of missing value across the whole dataset in percentage. I used ```{column: value / len(data) for column, value in missing_value.items()}```:
-
+```python
 {'destination': 0.0,
  'passanger': 0.0,
  'weather': 0.0,
@@ -47,7 +48,7 @@ Restaurant20To50          189
  'direction_same': 0.0,
  'direction_opp': 0.0,
  'Y': 0.0}
-
+```
 - In this dictionary, there are 99.14 % of car values are missing. This is an indication that the data collection process has flawed. Therefore, I will dropped the column. Others value only account for less than 2% of missing value. Since the proportion of missing data is not exceedingly high. I will impute the missing data with the most frequent category, its mode.
 
 #### 2. Drop and Replace Missing Value:
