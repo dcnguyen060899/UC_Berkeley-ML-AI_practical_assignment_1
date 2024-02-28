@@ -71,6 +71,7 @@ data = data.drop('car', axis=1)
       data[column].fillna(mode_value, inplace=True)
       ```
 - Now I check the missing value again:
+```python
 destination             0
 passanger               0
 weather                 0
@@ -97,6 +98,7 @@ direction_same          0
 direction_opp           0
 Y                       0
 dtype: int64
+```
 
 There appear to be no more missing value.
 
