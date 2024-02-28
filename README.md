@@ -4,7 +4,7 @@
 The main goal of this project is to observe through data analysis and visualization of probability distribution to investigate the variable on what make the differnces between driver who accept coupons and who does not.
 
 ### Jupyter Notebook:
-- In this project, the full analysis include observation, commnents, insight analysis will be in this notebook:
+- In this project, the full analysis include observations, comments, insights analysis will be in this notebook:
     ( [Jupiter Notebook used]https://github.com/dcnguyen060899/Will-a-Customer-Accept-the-Coupon/blob/main/notebook/prompt_assig5_1.ipynb)
 
 ### Report:
