@@ -115,15 +115,95 @@ We get:
 
 ![](images/counts_of_each_coupons_category.png)
 
-As restaurant gets more expensive, there are fewer and fewer coupon giveaway. There has to be a reason behind it. My hypothesis is due to income of different drivers.
+- As restaurant gets more expensive, there are fewer and fewer coupon giveaway. There has to be a reason behind it. My hypothesis is due to income of different drivers.
 
 #### 5. Visualize the Temperature Column:
 hist_plot_temp = px.histogram(data, x='temperature', color='temperature', title="Histogram Graph - Counts of Each Temperature's Category", nbins=3)
 hist_plot_temp.show()
 
-Remember, the temperature is in Farenheit. We get:
+- Remember, the temperature is in Farenheit. We get:
 
 ![](images/counts_of_each_temperature_category.png)
 
-As temperature reaching a summer-like ( around 80F - 90F), there are more counts for this categories. Maybe it is an indication of more driver are going out more due to nice weather in the summar, and have higher chance of accepting coupons.
+- As temperature reaching a summer-like ( around 80F - 90F ), there are more counts for this categories. Maybe it is an indication of more driver are going out more due to nice weather in the summar, and have higher chance of accepting coupons.
+
+#### 6. Understanding the Bar Coupon:
+- I used round(data[data['coupon'] == 'Bar'][['coupon', 'Y']].mean(numeric_only=True)[0], 2) * 100 to observe the proportion of bar coupons were accepted
+
+- We observed that the proportion of bar coupons were accepted is 41.0%
+
+- Now we want to compare the acceptance rate between those who went to a bar 3 or fewer times a month to those who went more. I used round(data[data['Bar'] == '1~3']['Y'].mean(numeric_only=True), 3) * 100
+
+We get:
+- The acceptance rate between those who went to a bar 3 or fewer times a month: 62.2% to those who went more: 62.2%. There is not quite a difference between people who either go to bar 3 or fewer times or more than that.
+
+- Now let's observe the acceptance rate between drivers who go to a bar more than once a month and are over the age of 25 to the all others.
+- I used:
+  round(data[data['Bar'].isin(['1~3', '4~8', 'gt8']) & (data['age'].isin(['46', '26', '31', '41', '50plus']))]['Y'].mean(numeric_only=True), 3) * 100
+  round(data[data['Bar'].isin(['never', 'less1']) & (data['age'].isin(['46', '26', '31', '41', '50plus']))]['Y'].mean(numeric_only=True), 3) * 100
+
+We get:
+- The difference between acceptance rate between drivers who go to bar more than once a month and are over 25: 61.5% compare to driver who are 25 and go than less than a month: 53.5%
+In this case, adding the factor of age into the picture, there is a different between driver. This implying that there is a correlation that age is a factor that impact whether the driver are more likely to accept or not.
+
+Now we add another layer of dimension to see if occupation influence the acceptance rate. I used:
+more_than_once = data[
+    data['Bar'].isin(['1~3', '4~8', 'gt8']) &
+    data['passanger'].isin(['Alone', 'Friend(s)', 'Partner']) &  
+    ~data['occupation'].isin(['Farming', 'Fishing', 'Forestry'])
+]['Y'].mean(numeric_only=True)
+
+less_than_once = data[
+    data['Bar'].isin(['less1', 'never']) &
+    data['passanger'].isin(['Alone', 'Friend(s)', 'Partner']) &  
+    ~data['occupation'].isin(['Farming', 'Fishing', 'Forestry'])
+]['Y'].mean(numeric_only=True)
+
+- Given the output of this code, we continue to see a pattern that the acceptance rate between drivers who go to bars more than once a month and had passengers that were not a kid and had occupations other than farming, fishing, or forestry: 62.3% compare to those who goes less than 1 or never: 55.1%.
+- The pattern continue to suggest that occupation also a interdepent factor that affect whether drivers probability of accepting the coupon or not.
+Our question as now is what if we add even more variable into the equation, what would the behaviour of the driver regarding acceptance explaination:
+- When we used this code, we observed:
+driver_group1 = data[
+    (data['Bar'].isin(['1~3', '4~8', 'gt8']) & ~data['passanger'].isin(['Kids']) & ~data['maritalStatus'].isin([['Widowed']]))
+    ]['Y'].mean()
+driver_group2 = data[
+    (~data['Bar'].isin(['never', 'less1']) & ~data['age'].isin(['50plus', '46', '41', '36']))
+    ]['Y'].mean()
+driver_group3 = data[    
+    (data['RestaurantLessThan20'].isin(['4~8', 'gt8']) & data['income'].isin(['$37500 - $49999']))
+    ]['Y'].mean()
+
+- The acceptance rate of drivers who go to bars more than once a month, had passengers that were not a kid, and were not widowed: 62.2% OR 
+ The acceptance rate of drivers who go to bars more than once a month and are under the age of 30: 61.8% OR 
+ The acceptance rate of drivers who go to cheap restaurants more than 4 times a month and income is less than 50K: 62.9%
+
+- From this probability distribution data analysis, this tells us a story that driver who income are low + not widow + no kid +  young tend to spend more time at the bar, go to cheap restuarant and are more likely to accept coupon. So then this explain that age + income + occuaption are the three main factor from observation that contributed to the difference between driver who accept coupon and those who's not.
+
+- Before we go to the visualization for better understanding of what makes driver who accept coupon and those who's not different from each other, I want to make some hypothesis and we will come back to see if out hypothesis was correct:
+ 1. My hypothesis is that coupon acceptance rate affected more by drivers' lifestyle than demographic factors.
+ 2. Younger drivers and those who has lower inconme show a slightly higher acceptance rate, most likely due to the social outing interest.
+ 3. Furthermore, the fact that drivers without kids and with specific occupations illustrate a higher rate of accpeting coupon.
+ 4. In short, acceptance rate isn't a matter of chacne but more nuanced derivative from drivers' combination of social habits, economic status, and life circumstances. Meaning those who are already enjoy bar life then are more inclined toward accepting coupon.
+
+#### 7. Visualization:
+Let's observed whether annual occupation affecting the rate of acceptance through bar graph:
+We used this code:
+plt.figure(figsize=(20, 8))
+
+sns.countplot(x='occupation', hue='Y', data=data)
+
+plt.title('Coupon Acceptance for Different Occupations Brackets')
+plt.xlabel('Occupation')
+plt.ylabel('Count of Coupon Acceptance')
+
+# rotate the x-axis for readability
+plt.xticks(rotation=45)
+plt.legend(title='Coupon Accepted', loc='upper right')  # Adjust legend position as needed
+plt.tight_layout()  # Adjust the layout
+plt.show()
+
+We get:
+![](images/coupon_acceptance_for_different_occupations_brackets.png)
+
+
 
